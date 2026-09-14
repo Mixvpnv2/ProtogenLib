@@ -2827,7 +2827,7 @@ do
     Library.KeybindFrame = KeybindOuter;
     Library.KeybindContainer = KeybindContainer;
     Library:MakeDraggable(KeybindOuter);
-        -- ====================== PLAYERS LIST ======================
+        -- ====================== PLAYERS LIST + GLOW ======================
     _G.PlayerRelations = _G.PlayerRelations or {}
 
     local function getRelation(player)
@@ -2850,12 +2850,39 @@ do
 
     local PlayersOuter = Library:Create('Frame', {
         BorderColor3 = Color3.new(0, 0, 0);
-        Position = UDim2.new(0, 230, 0.5, -200);
-        Size = UDim2.new(0, 300, 0, 400);
+        Position = UDim2.new(0, 740, 0, 50);
+        Size = UDim2.new(0, 280, 0, 360);
         Visible = true;
         ZIndex = 100;
         Parent = ScreenGui;
     });
+
+    -- GLOW (обводка)
+    local PlayersGlow = Library:Create('Frame', {
+        BackgroundTransparency = 1;
+        BorderSizePixel = 0;
+        Size = UDim2.new(1, 6, 1, 6);
+        Position = UDim2.fromOffset(-3, -3);
+        ZIndex = 99;
+        Parent = PlayersOuter;
+    });
+
+    local GlowStroke = Instance.new('UIStroke')
+    GlowStroke.Color = Library.AccentColor
+    GlowStroke.Thickness = 2
+    GlowStroke.Transparency = 0.35
+    GlowStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    GlowStroke.Parent = PlayersGlow
+
+    local GlowStroke2 = Instance.new('UIStroke')
+    GlowStroke2.Color = Library.AccentColor
+    GlowStroke2.Thickness = 4
+    GlowStroke2.Transparency = 0.7
+    GlowStroke2.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    GlowStroke2.Parent = PlayersGlow
+
+    Library:AddToRegistry(GlowStroke, { Color = 'AccentColor' }, true)
+    Library:AddToRegistry(GlowStroke2, { Color = 'AccentColor' }, true)
 
     local PlayersInner = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor;
@@ -3851,6 +3878,10 @@ function Library:CreateWindow(...)
         task.wait(FadeTime);
 
         Outer.Visible = Toggled;
+
+        if Library.PlayersFrame then
+            Library.PlayersFrame.Visible = Toggled
+        end
 
         Fading = false;
     end
