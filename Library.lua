@@ -2857,33 +2857,30 @@ do
         Parent = ScreenGui;
     });
 
-    -- GLOW (обводка)
-    local PlayersGlow = Library:Create('Frame', {
-        BackgroundTransparency = 1;
-        BorderSizePixel = 0;
-        Size = UDim2.new(1, 6, 1, 6);
-        Position = UDim2.fromOffset(-3, -3);
-        ZIndex = 99;
-        Parent = PlayersOuter;
-    });
+    local function makeSoftGlow(sizeOffset, transparency)
+        local glow = Library:Create('Frame', {
+            BackgroundColor3 = Library.AccentColor;
+            BackgroundTransparency = transparency;
+            BorderSizePixel = 0;
+            AnchorPoint = Vector2.new(0.5, 0.5);
+            Position = UDim2.fromScale(0.5, 0.5);
+            Size = UDim2.new(1, sizeOffset, 1, sizeOffset);
+            ZIndex = 98;
+            Parent = PlayersOuter;
+        })
 
-    local GlowStroke = Instance.new('UIStroke')
-    GlowStroke.Color = Library.AccentColor
-    GlowStroke.Thickness = 2
-    GlowStroke.Transparency = 0.35
-    GlowStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    GlowStroke.Parent = PlayersGlow
+        local corner = Instance.new('UICorner')
+        corner.CornerRadius = UDim.new(0, 6)
+        corner.Parent = glow
 
-    local GlowStroke2 = Instance.new('UIStroke')
-    GlowStroke2.Color = Library.AccentColor
-    GlowStroke2.Thickness = 4
-    GlowStroke2.Transparency = 0.7
-    GlowStroke2.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    GlowStroke2.Parent = PlayersGlow
+        Library:AddToRegistry(glow, {
+            BackgroundColor3 = 'AccentColor';
+        }, true)
+    end
 
-    Library:AddToRegistry(GlowStroke, { Color = 'AccentColor' }, true)
-    Library:AddToRegistry(GlowStroke2, { Color = 'AccentColor' }, true)
-
+    makeSoftGlow(10, 0.88)
+    makeSoftGlow(16, 0.93)
+    makeSoftGlow(24, 0.96)
     local PlayersInner = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor;
         BorderColor3 = Library.OutlineColor;
@@ -3841,39 +3838,63 @@ function Library:CreateWindow(...)
             end);
         end;
 
-        for _, Desc in next, Outer:GetDescendants() do
-            local Properties = {};
+        local function collectAndTween(root)
+            if not root then return end
 
-            if Desc:IsA('ImageLabel') then
-                table.insert(Properties, 'ImageTransparency');
-                table.insert(Properties, 'BackgroundTransparency');
-            elseif Desc:IsA('TextLabel') or Desc:IsA('TextBox') then
-                table.insert(Properties, 'TextTransparency');
-            elseif Desc:IsA('Frame') or Desc:IsA('ScrollingFrame') then
-                table.insert(Properties, 'BackgroundTransparency');
-            elseif Desc:IsA('UIStroke') then
-                table.insert(Properties, 'Transparency');
-            end;
+            local list = { root }
+            for _, Desc in next, root:GetDescendants() do
+                table.insert(list, Desc)
+            end
 
-            local Cache = TransparencyCache[Desc];
+            for _, Desc in next, list do
+                local Properties = {};
 
-            if (not Cache) then
-                Cache = {};
-                TransparencyCache[Desc] = Cache;
-            end;
-
-            for _, Prop in next, Properties do
-                if not Cache[Prop] then
-                    Cache[Prop] = Desc[Prop];
+                if Desc:IsA('ImageLabel') then
+                    table.insert(Properties, 'ImageTransparency');
+                    table.insert(Properties, 'BackgroundTransparency');
+                elseif Desc:IsA('TextLabel') or Desc:IsA('TextBox') then
+                    table.insert(Properties, 'TextTransparency');
+                elseif Desc:IsA('Frame') or Desc:IsA('ScrollingFrame') then
+                    table.insert(Properties, 'BackgroundTransparency');
+                elseif Desc:IsA('UIStroke') then
+                    table.insert(Properties, 'Transparency');
                 end;
 
-                if Cache[Prop] == 1 then
-                    continue;
+                local Cache = TransparencyCache[Desc];
+
+                if (not Cache) then
+                    Cache = {};
+                    TransparencyCache[Desc] = Cache;
                 end;
 
-                TweenService:Create(Desc, TweenInfo.new(FadeTime, Enum.EasingStyle.Linear), { [Prop] = Toggled and Cache[Prop] or 1 }):Play();
-            end;
-        end;
+                for _, Prop in next, Properties do
+                    if not Cache[Prop] then
+                        Cache[Prop] = Desc[Prop];
+                    end;
+
+                    if Cache[Prop] == 1 then
+                        continue;
+                    end;
+
+                    TweenService:Create(
+                        Desc,
+                        TweenInfo.new(FadeTime, Enum.EasingStyle.Linear),
+                        { [Prop] = Toggled and Cache[Prop] or 1 }
+                    ):Play();
+                end;
+            end
+        end
+
+        -- меню
+        collectAndTween(Outer)
+
+        -- players list (тот же tween)
+        if Library.PlayersFrame then
+            if Toggled then
+                Library.PlayersFrame.Visible = true
+            end
+            collectAndTween(Library.PlayersFrame)
+        end
 
         task.wait(FadeTime);
 
@@ -3884,7 +3905,6 @@ function Library:CreateWindow(...)
         end
 
         Fading = false;
-    end
 
     Library:GiveSignal(InputService.InputBegan:Connect(function(Input, Processed)
         if type(Library.ToggleKeybind) == 'table' and Library.ToggleKeybind.Type == 'KeyPicker' then
