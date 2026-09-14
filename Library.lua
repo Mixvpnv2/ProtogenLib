@@ -2857,30 +2857,49 @@ do
         Parent = ScreenGui;
     });
 
-    local function makeSoftGlow(sizeOffset, transparency)
-        local glow = Library:Create('Frame', {
-            BackgroundColor3 = Library.AccentColor;
-            BackgroundTransparency = transparency;
-            BorderSizePixel = 0;
-            AnchorPoint = Vector2.new(0.5, 0.5);
-            Position = UDim2.fromScale(0.5, 0.5);
-            Size = UDim2.new(1, sizeOffset, 1, sizeOffset);
-            ZIndex = 98;
-            Parent = PlayersOuter;
-        })
+    -- GLOW (мягкий)
+    local PlayersGlow1 = Library:Create('Frame', {
+        BackgroundColor3 = Library.AccentColor;
+        BackgroundTransparency = 0.88;
+        BorderSizePixel = 0;
+        AnchorPoint = Vector2.new(0.5, 0.5);
+        Position = UDim2.fromScale(0.5, 0.5);
+        Size = UDim2.new(1, 10, 1, 10);
+        ZIndex = 98;
+        Parent = PlayersOuter;
+    });
+    Instance.new('UICorner', PlayersGlow1).CornerRadius = UDim.new(0, 6)
+    Library:AddToRegistry(PlayersGlow1, { BackgroundColor3 = 'AccentColor' }, true)
 
-        local corner = Instance.new('UICorner')
-        corner.CornerRadius = UDim.new(0, 6)
-        corner.Parent = glow
+    local PlayersGlow2 = Library:Create('Frame', {
+        BackgroundColor3 = Library.AccentColor;
+        BackgroundTransparency = 0.93;
+        BorderSizePixel = 0;
+        AnchorPoint = Vector2.new(0.5, 0.5);
+        Position = UDim2.fromScale(0.5, 0.5);
+        Size = UDim2.new(1, 16, 1, 16);
+        ZIndex = 97;
+        Parent = PlayersOuter;
+    });
+    Instance.new('UICorner', PlayersGlow2).CornerRadius = UDim.new(0, 6)
+    Library:AddToRegistry(PlayersGlow2, { BackgroundColor3 = 'AccentColor' }, true)
 
-        Library:AddToRegistry(glow, {
-            BackgroundColor3 = 'AccentColor';
-        }, true)
-    end
+    local PlayersGlow3 = Library:Create('Frame', {
+        BackgroundColor3 = Library.AccentColor;
+        BackgroundTransparency = 0.96;
+        BorderSizePixel = 0;
+        AnchorPoint = Vector2.new(0.5, 0.5);
+        Position = UDim2.fromScale(0.5, 0.5);
+        Size = UDim2.new(1, 24, 1, 24);
+        ZIndex = 96;
+        Parent = PlayersOuter;
+    });
+    Instance.new('UICorner', PlayersGlow3).CornerRadius = UDim.new(0, 6)
+    Library:AddToRegistry(PlayersGlow3, { BackgroundColor3 = 'AccentColor' }, true)
 
-    makeSoftGlow(10, 0.88)
-    makeSoftGlow(16, 0.93)
-    makeSoftGlow(24, 0.96)
+    Library:AddToRegistry(GlowStroke, { Color = 'AccentColor' }, true)
+    Library:AddToRegistry(GlowStroke2, { Color = 'AccentColor' }, true)
+
     local PlayersInner = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor;
         BorderColor3 = Library.OutlineColor;
