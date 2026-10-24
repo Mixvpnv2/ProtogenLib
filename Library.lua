@@ -147,7 +147,7 @@ function Library:ApplyUIShadow(Inst, Properties)
     local ShadowProperties = {
         BlurRadius = UDim.new(0, 0);
         Color = Color3.fromRGB(46, 70, 157);
-        Offset = UDim2.new(0, 20, 0, 20);
+        Offset = UDim2.new(0, 0, 0, 0);
         Spread = UDim2.new(0, 0, 0, 0);
         Transparency = 0;
         ZIndex = -1;
@@ -2725,8 +2725,8 @@ do
     });
 
     Library:ApplyUIShadow(WatermarkOuter, {
-        BlurRadius = UDim.new(0, 10);
-        Offset = UDim2.new(0, 5, 0, 5);
+        BlurRadius = UDim.new(0, 20);
+        Offset = UDim2.new(0, 0, 0, 0);
         Color = Color3.fromRGB(46, 70, 157);
     });
 
@@ -2882,8 +2882,8 @@ function Library:Notify(Text, Time)
     });
 
     Library:ApplyUIShadow(NotifyOuter, {
-        BlurRadius = UDim.new(0, 10);
-        Offset = UDim2.new(0, 5, 0, 5);
+        BlurRadius = UDim.new(0, 20);
+        Offset = UDim2.new(0, 0, 0, 0);
         Color = Color3.fromRGB(46, 70, 157);
     });
 
@@ -3004,7 +3004,7 @@ function Library:CreateWindow(...)
 
     Library:ApplyUIShadow(Outer, {
         BlurRadius = UDim.new(0, 20);
-        Offset = UDim2.new(0, 20, 0, 20);
+        Offset = UDim2.new(0, 0, 0, 0);
         Color = Color3.fromRGB(46, 70, 157);
         Transparency = 0;
         ZIndex = -1;
