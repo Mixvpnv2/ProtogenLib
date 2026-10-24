@@ -2795,6 +2795,14 @@ do
         Parent = ScreenGui;
     });
 
+    Library:ApplyUIShadow(KeybindOuter, {
+        BlurRadius = UDim.new(0, 20);
+        Offset = UDim2.new(0, 0, 0, 0);
+        Color = Color3.fromRGB(46, 70, 157);
+        Transparency = 0;
+        ZIndex = -1;       
+    });
+
     local KeybindInner = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor;
         BorderColor3 = Library.OutlineColor;
