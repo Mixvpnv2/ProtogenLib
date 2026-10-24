@@ -143,27 +143,6 @@ function Library:ApplyTextStroke(Inst)
     });
 end;
 
--- ИСПРАВЛЕННАЯ ФУНКЦИЯ: BlurRadius теперь UDim
-function Library:ApplyUIShadow(Inst, Properties)
-    local ShadowProperties = {
-        BlurRadius = UDim.new(0, 0); -- Тип UDim (Scale, Offset)
-        Color = Color3.fromRGB(46, 70, 157);
-        Offset = UDim2.new(0, 20, 0, 20); -- Тип UDim2
-        Spread = UDim2.new(0, 0, 0, 0);   -- Тип UDim2
-        Transparency = 0;
-        ZIndex = -1;
-        Parent = Inst;
-    };
-
-    if Properties then
-        for Property, Value in next, Properties do
-            ShadowProperties[Property] = Value;
-        end;
-    end;
-
-    return Library:Create('UIShadow', ShadowProperties);
-end;
-
 function Library:CreateLabel(Properties, IsHud)
     local _Instance = Library:Create('TextLabel', {
         BackgroundTransparency = 1;
@@ -174,14 +153,6 @@ function Library:CreateLabel(Properties, IsHud)
     });
 
     Library:ApplyTextStroke(_Instance);
-
-    -- Для текста передаем UDim для BlurRadius
-    Library:ApplyUIShadow(_Instance, {
-        BlurRadius = UDim.new(0, 2);
-        Color = Color3.new(0, 0, 0);
-        Offset = UDim2.new(0, 1, 0, 1);
-        Transparency = 0.5;
-    });
 
     Library:AddToRegistry(_Instance, {
         TextColor3 = 'FontColor';
@@ -2733,6 +2704,12 @@ do
         Parent = ScreenGui;
     });
 
+    Library:ApplyUIShadow(WatermarkOuter, {
+        BlurRadius = UDim.new(0, 10);
+        Offset = UDim2.new(0, 5, 0, 5);
+        Color = Color3.fromRGB(46, 70, 157);
+    });
+
     local WatermarkInner = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor;
         BorderColor3 = Library.AccentColor;
@@ -2884,6 +2861,12 @@ function Library:Notify(Text, Time)
         Parent = Library.NotificationArea;
     });
 
+    Library:ApplyUIShadow(NotifyOuter, {
+        BlurRadius = UDim.new(0, 10);
+        Offset = UDim2.new(0, 5, 0, 5);
+        Color = Color3.fromRGB(46, 70, 157);
+    });
+
     local NotifyInner = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor;
         BorderColor3 = Library.OutlineColor;
@@ -2997,6 +2980,14 @@ function Library:CreateWindow(...)
         Visible = false;
         ZIndex = 1;
         Parent = ScreenGui;
+    });
+
+    Library:ApplyUIShadow(Outer, {
+        BlurRadius = UDim.new(0, 20);
+        Offset = UDim2.new(0, 20, 0, 20);
+        Color = Color3.fromRGB(46, 70, 157);
+        Transparency = 0;
+        ZIndex = -1;
     });
 
     Library:MakeDraggable(Outer, 25);
