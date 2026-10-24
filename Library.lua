@@ -143,6 +143,26 @@ function Library:ApplyTextStroke(Inst)
     });
 end;
 
+function Library:ApplyUIShadow(Inst, Properties)
+    local ShadowProperties = {
+        BlurRadius = UDim.new(0, 0);
+        Color = Color3.fromRGB(46, 70, 157);
+        Offset = UDim2.new(0, 20, 0, 20);
+        Spread = UDim2.new(0, 0, 0, 0);
+        Transparency = 0;
+        ZIndex = -1;
+        Parent = Inst;
+    };
+
+    if Properties then
+        for Property, Value in next, Properties do
+            ShadowProperties[Property] = Value;
+        end;
+    end;
+
+    return Library:Create('UIShadow', ShadowProperties);
+end;
+
 function Library:CreateLabel(Properties, IsHud)
     local _Instance = Library:Create('TextLabel', {
         BackgroundTransparency = 1;
