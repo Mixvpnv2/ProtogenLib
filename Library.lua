@@ -29,10 +29,16 @@ local Library = {
 
     HudRegistry = {};
 
+    -- FontColor = Color3.fromRGB(255, 255, 255);
+    -- MainColor = Color3.fromRGB(24, 24, 37);
+    -- BackgroundColor = Color3.fromRGB(22, 22, 31);
+    -- AccentColor = Color3.fromRGB(103, 89, 179);
+    -- OutlineColor = Color3.fromRGB(50, 50, 50);
+    
     FontColor = Color3.fromRGB(255, 255, 255);
-    MainColor = Color3.fromRGB(24, 24, 37);
-    BackgroundColor = Color3.fromRGB(22, 22, 31);
-    AccentColor = Color3.fromRGB(103, 89, 179);
+    MainColor = Color3.fromRGB(28, 28, 28);
+    BackgroundColor = Color3.fromRGB(20, 20, 20);
+    AccentColor = Color3.fromRGB(0, 85, 255);
     OutlineColor = Color3.fromRGB(50, 50, 50);
     RiskColor = Color3.fromRGB(255, 50, 50),
 
@@ -3010,6 +3016,19 @@ function Library:CreateWindow(...)
         Parent = ScreenGui;
     });
 
+    local BackgroundOverlay = Library:Create('Frame', {
+        BackgroundColor3 = Color3.new(0, 0, 0);
+        BackgroundTransparency = 1;
+        BorderSizePixel = 0;
+        Position = UDim2.fromOffset(0, 0);
+        Size = UDim2.fromScale(1, 1);
+        ZIndex = 0; -- под окном
+        Visible = false;
+        Parent = ScreenGui;
+    });
+
+    Library.BackgroundOverlay = BackgroundOverlay;
+
     Library:ApplyUIShadow(Outer, {
         BlurRadius = UDim.new(0, 20);
         Offset = UDim2.new(0, 0, 0, 0);
@@ -3565,12 +3584,21 @@ function Library:CreateWindow(...)
         Toggled = (not Toggled);
         ModalElement.Modal = Toggled;
 
+        local Overlay = Library.BackgroundOverlay;
+
         if Toggled then
-            -- A bit scuffed, but if we're going from not toggled -> toggled we want to show the frame immediately so that the fade is visible.
             Outer.Visible = true;
+            if Overlay then
+                Overlay.Visible = true;
+                Overlay.BackgroundTransparency = 1;
+                TweenService:Create(
+                    Overlay,
+                    TweenInfo.new(FadeTime, Enum.EasingStyle.Linear),
+                    { BackgroundTransparency = 0.45 } -- насколько тёмный фон (0 = чёрный, 1 = нет)
+                ):Play();
+            end
 
             task.spawn(function()
-                -- TODO: add cursor fade?
                 local State = InputService.MouseIconEnabled;
 
                 local Cursor = Drawing.new('Triangle');
@@ -3607,6 +3635,20 @@ function Library:CreateWindow(...)
                 Cursor:Remove();
                 CursorOutline:Remove();
             end);
+        else
+            if Overlay then
+                local tw = TweenService:Create(
+                    Overlay,
+                    TweenInfo.new(FadeTime, Enum.EasingStyle.Linear),
+                    { BackgroundTransparency = 1 }
+                );
+                tw:Play();
+                tw.Completed:Connect(function()
+                    if not Toggled then
+                        Overlay.Visible = false;
+                    end
+                end);
+            end
         end;
 
         for _, Desc in next, Outer:GetDescendants() do
@@ -3643,7 +3685,7 @@ function Library:CreateWindow(...)
             end;
         end;
 
-        task.wait(FadeTime);
+    task.wait(FadeTime);
 
         Outer.Visible = Toggled;
 
