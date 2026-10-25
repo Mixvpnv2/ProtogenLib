@@ -1,8 +1,6 @@
-local SCRIPT_URL = "https://ancient-leaf-1c1f.allpper3512a.workers.dev"
 local SCRIPT_URL = "https://raw.githubusercontent.com/Mixvpnv2/CatteState/refs/heads/main/MainScripts/Main.lua"
 local KEYS_URL   = "https://raw.githubusercontent.com/Mixvpnv2/ProtogenLib/main/System/Keys.txt"
 local SAVE_PATH  = "CatteState/key.txt"
-
 
 if getgenv().CatteInjected then
     print("You Used Scripts")
