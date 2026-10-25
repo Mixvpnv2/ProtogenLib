@@ -1,7 +1,7 @@
 local KeySystem = {}
 
 KeySystem.KeysURL = "https://raw.githubusercontent.com/Mixvpnv2/ProtogenLib/main/System/Keys.txt"
-KeySystem.ScriptURL = "https://raw.githubusercontent.com/Mixvpnv2/ProtogenLib/main/Example.lua" -- твой основной скрипт
+KeySystem.ScriptURL = "https://raw.githubusercontent.com/Mixvpnv2/CatteState/refs/heads/main/MainScripts/Main.lua"
 KeySystem.SaveKey = true
 KeySystem.FileName = "CatteState/key.txt"
 
