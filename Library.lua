@@ -1,8 +1,10 @@
 local InputService = game:GetService('UserInputService');
 local TextService = game:GetService('TextService');
 local CoreGui = game:GetService('CoreGui');
+
 local Teams = game:GetService('Teams');
 local Players = game:GetService('Players');
+local GuiService = game:GetService('GuiService');
 local RunService = game:GetService('RunService')
 local TweenService = game:GetService('TweenService');
 local RenderStepped = RunService.RenderStepped;
@@ -14,7 +16,6 @@ local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
 local ScreenGui = Instance.new('ScreenGui');
 ProtectGui(ScreenGui);
 
-ScreenGui.IgnoreGuiInset = true;
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
 ScreenGui.Parent = CoreGui;
 
@@ -3021,12 +3022,19 @@ function Library:CreateWindow(...)
         BackgroundColor3 = Color3.new(0, 0, 0);
         BackgroundTransparency = 1;
         BorderSizePixel = 0;
-        Position = UDim2.fromScale(0, 0);
-        Size = UDim2.fromScale(1, 1);
         ZIndex = 0;
         Visible = false;
         Parent = ScreenGui;
     });
+
+    local function updateOverlaySize()
+        local inset = GuiService:GetGuiInset();
+        BackgroundOverlay.Position = UDim2.fromOffset(-inset.X, -inset.Y);
+        BackgroundOverlay.Size = UDim2.new(1, inset.X * 2, 1, inset.Y * 2);
+    end
+
+    updateOverlaySize();
+    GuiService:GetPropertyChangedSignal('TopbarInset'):Connect(updateOverlaySize);
 
     Library.BackgroundOverlay = BackgroundOverlay;
 
