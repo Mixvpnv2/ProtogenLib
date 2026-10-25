@@ -1,4 +1,4 @@
-local BASE = "https://loaderblabla.rythmfolter.workers.dev"
+local SCRIPT_URL = "https://raw.githubusercontent.com/Mixvpnv2/CatteState/refs/heads/main/MainScripts/Main.lua"
 local KEYS_URL = BASE .. "/keys"
 local SAVE_PATH  = "CatteState/key.txt"
 
