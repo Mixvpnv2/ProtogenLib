@@ -14,6 +14,7 @@ local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
 local ScreenGui = Instance.new('ScreenGui');
 ProtectGui(ScreenGui);
 
+ScreenGui.IgnoreGuiInset = true;
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
 ScreenGui.Parent = CoreGui;
 
@@ -3020,9 +3021,9 @@ function Library:CreateWindow(...)
         BackgroundColor3 = Color3.new(0, 0, 0);
         BackgroundTransparency = 1;
         BorderSizePixel = 0;
-        Position = UDim2.fromOffset(0, 0);
+        Position = UDim2.fromScale(0, 0);
         Size = UDim2.fromScale(1, 1);
-        ZIndex = 0; -- под окном
+        ZIndex = 0;
         Visible = false;
         Parent = ScreenGui;
     });
@@ -3594,7 +3595,7 @@ function Library:CreateWindow(...)
                 TweenService:Create(
                     Overlay,
                     TweenInfo.new(FadeTime, Enum.EasingStyle.Linear),
-                    { BackgroundTransparency = 0.45 } -- насколько тёмный фон (0 = чёрный, 1 = нет)
+                    { BackgroundTransparency = 0.55 }
                 ):Play();
             end
 
