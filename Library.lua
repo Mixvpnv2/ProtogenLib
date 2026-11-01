@@ -3020,6 +3020,8 @@ function Library:CreateWindow(...)
     local BackgroundOverlay = Library:Create('ImageLabel', {
         BackgroundColor3 = Color3.new(0, 0, 0);
         BackgroundTransparency = 1;
+        ImageTransparency = 0.8,
+        Image = "http://www.roblox.com/asset/?id=100694038903874",
         BorderSizePixel = 0;
         ZIndex = 0;
         Visible = false;
