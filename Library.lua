@@ -1,7 +1,6 @@
 local InputService = game:GetService('UserInputService');
 local TextService = game:GetService('TextService');
 local CoreGui = game:GetService('CoreGui');
-
 local Teams = game:GetService('Teams');
 local Players = game:GetService('Players');
 local GuiService = game:GetService('GuiService');
@@ -1544,7 +1543,7 @@ do
                     Library:AddToRegistry(Button.Label, { TextColor3 = 'AccentColor' })
 
                     Button.Label.TextColor3 = Library.AccentColor
-                    Button.Label.Text = 'Are you sure?'
+                    Button.Label.Text = 'Are you sure?' -- meow
                     Button.Locked = true
 
                     local clicked = WaitForEvent(Button.Outer.InputBegan, 0.5, ValidateClick)
@@ -3018,7 +3017,7 @@ function Library:CreateWindow(...)
         Parent = ScreenGui;
     });
 
-    local BackgroundOverlay = Library:Create('Frame', {
+    local BackgroundOverlay = Library:Create('ImageLabel', {
         BackgroundColor3 = Color3.new(0, 0, 0);
         BackgroundTransparency = 1;
         BorderSizePixel = 0;
