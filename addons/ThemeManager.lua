@@ -13,6 +13,7 @@ local ThemeManager = {} do
 		['Tokyo Night'] 	= { 6, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"191925","AccentColor":"6759b3","BackgroundColor":"16161f","OutlineColor":"323232"}') },
 		['Ubuntu'] 			= { 7, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"3e3e3e","AccentColor":"e2581e","BackgroundColor":"323232","OutlineColor":"191919"}') },
 		['Quartz'] 			= { 8, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"232330","AccentColor":"426e87","BackgroundColor":"1d1b26","OutlineColor":"27232f"}') },
+		['Green idk protogen'] 			= { 9, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"172017","AccentColor":"659c62","BackgroundColor":"1b271d","OutlineColor":"44744e"}') },
 	}
 
 	function ThemeManager:ApplyTheme(theme)
@@ -103,7 +104,7 @@ local ThemeManager = {} do
 
 		groupbox:AddDivider()
 		groupbox:AddInput('ThemeManager_CustomThemeName', { Text = 'Custom theme name' })
-		groupbox:AddDropdown('ThemeManager_CustomThemeList', { Text = 'Custom themes', Values = self:ReloadCustomThemes(), AllowNull = true, Default = 1 })
+		groupbox:AddDropdown('ThemeManager_CustomThemeList', { Text = 'Custom themes', Values = self:ReloadCustomThemes(), AllowNull = true, Default = 8 })
 		groupbox:AddDivider()
 		
 		groupbox:AddButton('Save theme', function() 
@@ -203,9 +204,6 @@ local ThemeManager = {} do
 
 	function ThemeManager:BuildFolderTree()
 		local paths = {}
-
-		-- build the entire tree if a path is like some-hub/phantom-forces
-		-- makefolder builds the entire tree on Synapse X but not other exploits
 
 		local parts = self.Folder:split('/')
 		for idx = 1, #parts do
