@@ -9,7 +9,7 @@ local TweenService = game:GetService('TweenService');
 local RenderStepped = RunService.RenderStepped;
 local LocalPlayer = Players.LocalPlayer;
 local Mouse = LocalPlayer:GetMouse();
-print("123")
+
 local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
 
 local ScreenGui = Instance.new('ScreenGui');
@@ -3010,6 +3010,11 @@ function Library:CreateWindow(...)
         Visible = false;
         ZIndex = 1;
         Parent = ScreenGui;
+    });
+
+    local UICorner = Library:Create('UICorner', {
+       CornerRadius = UDim.new(0, 8);
+       Parent = ScreenGui;
     });
 
     local BackgroundOverlay = Library:Create('ImageLabel', {
