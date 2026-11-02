@@ -1,6 +1,6 @@
 local httpService = game:GetService('HttpService')
 local ThemeManager = {} do
-	ThemeManager.Folder = 'LinoriaLibSettings'
+	ThemeManager.Folder = 'CatteStateSl'
 	-- if not isfolder(ThemeManager.Folder) then makefolder(ThemeManager.Folder) end
 
 	ThemeManager.Library = nil
@@ -14,6 +14,7 @@ local ThemeManager = {} do
 		['Ubuntu'] 			= { 7, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"3e3e3e","AccentColor":"e2581e","BackgroundColor":"323232","OutlineColor":"191919"}') },
 		['Quartz'] 			= { 8, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"232330","AccentColor":"426e87","BackgroundColor":"1d1b26","OutlineColor":"27232f"}') },
 		['Green idk protogen'] 			= { 9, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"172017","AccentColor":"659c62","BackgroundColor":"1b271d","OutlineColor":"44744e"}') },
+		['Black Mini'] 			= { 10, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"0d0c0c","AccentColor":"333437","BackgroundColor":"0d0c0c","OutlineColor":"343434"}') },
 	}
 
 	function ThemeManager:ApplyTheme(theme)
@@ -21,8 +22,6 @@ local ThemeManager = {} do
 		local data = customThemeData or self.BuiltInThemes[theme]
 
 		if not data then return end
-
-		-- custom themes are just regular dictionaries instead of an array with { index, dictionary }
 
 		local scheme = data[2]
 		for idx, col in next, customThemeData or scheme do
