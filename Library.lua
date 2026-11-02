@@ -2726,6 +2726,12 @@ do
         Parent = ScreenGui;
     });
 
+    local UICorner = Library:Create('UICorner', {
+       CornerRadius = UDim.new(0, 8);
+       Name = "Meow";
+       Parent = WatermarkOuter;
+    });
+
     Library:ApplyUIShadow(WatermarkOuter, {
         BlurRadius = UDim.new(0, 20);
         Offset = UDim2.new(0, 0, 0, 0);
@@ -2741,6 +2747,12 @@ do
         Parent = WatermarkOuter;
     });
 
+    local UICorner = Library:Create('UICorner', {
+       CornerRadius = UDim.new(0, 8);
+       Name = "Meow";
+       Parent = WatermarkInner;
+    });
+
     Library:AddToRegistry(WatermarkInner, {
         BorderColor3 = 'AccentColor';
     });
@@ -2752,6 +2764,12 @@ do
         Size = UDim2.new(1, -2, 1, -2);
         ZIndex = 202;
         Parent = WatermarkInner;
+    });
+
+    local UICorner = Library:Create('UICorner', {
+       CornerRadius = UDim.new(0, 8);
+       Name = "Meow";
+       Parent = InnerFrame;
     });
 
     local Gradient = Library:Create('UIGradient', {
@@ -2785,8 +2803,6 @@ do
     Library.WatermarkText = WatermarkLabel;
     Library:MakeDraggable(Library.Watermark);
 
-
-
     local KeybindOuter = Library:Create('Frame', {
         AnchorPoint = Vector2.new(0, 0.5);
         BorderColor3 = Color3.new(0, 0, 0);
@@ -2795,6 +2811,12 @@ do
         Visible = false;
         ZIndex = 100;
         Parent = ScreenGui;
+    });
+
+    local UICorner = Library:Create('UICorner', {
+       CornerRadius = UDim.new(0, 8);
+       Name = "Meow";
+       Parent = KeybindOuter;
     });
 
     Library:ApplyUIShadow(KeybindOuter, {
@@ -2812,6 +2834,12 @@ do
         Size = UDim2.new(1, 0, 1, 0);
         ZIndex = 101;
         Parent = KeybindOuter;
+    });
+
+    local UICorner = Library:Create('UICorner', {
+       CornerRadius = UDim.new(0, 8);
+       Name = "Meow";
+       Parent = KeybindInner;
     });
 
     Library:AddToRegistry(KeybindInner, {
