@@ -3014,7 +3014,7 @@ function Library:CreateWindow(...)
 
     local UICorner = Library:Create('UICorner', {
        CornerRadius = UDim.new(0, 8);
-       Parent = ScreenGui;
+       Parent = Outer;
     });
 
     local BackgroundOverlay = Library:Create('ImageLabel', {
