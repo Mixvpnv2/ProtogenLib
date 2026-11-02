@@ -3014,6 +3014,7 @@ function Library:CreateWindow(...)
 
     local UICorner = Library:Create('UICorner', {
        CornerRadius = UDim.new(0, 8);
+       Name = "Meow";
        Parent = Outer;
     });
 
@@ -3057,6 +3058,12 @@ function Library:CreateWindow(...)
         Size = UDim2.new(1, -2, 1, -2);
         ZIndex = 1;
         Parent = Outer;
+    });
+
+    local UICorner = Library:Create('UICorner', {
+       CornerRadius = UDim.new(0, 8);
+       Name = "Meow";
+       Parent = Inner;
     });
 
     Library:AddToRegistry(Inner, {
