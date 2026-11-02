@@ -3012,11 +3012,6 @@ function Library:CreateWindow(...)
         Parent = ScreenGui;
     });
 
-    local UICorner = Library:Create('UICorner', {
-       CornerRadius = UDim.new(0, 8);
-       Parent = ScreenGui;
-    });
-
     local BackgroundOverlay = Library:Create('ImageLabel', {
         BackgroundColor3 = Color3.new(0, 0, 0);
         BackgroundTransparency = 1;
