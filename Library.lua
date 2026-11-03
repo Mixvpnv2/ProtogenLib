@@ -42,6 +42,8 @@ local Library = {
     AccentColor = Color3.fromRGB(0, 85, 255);
     OutlineColor = Color3.fromRGB(50, 50, 50);
     RiskColor = Color3.fromRGB(255, 50, 50),
+    GlowColor = Color3.fromRGB(46, 70, 157),
+    GlowShadows = {},
 
     Black = Color3.new(0, 0, 0);
     Font = Enum.Font.Code,
@@ -152,8 +154,8 @@ end;
 
 function Library:ApplyUIShadow(Inst, Properties)
     local ShadowProperties = {
-        BlurRadius = UDim.new(0, 0);
-        Color = Color3.fromRGB(46, 70, 157);
+        BlurRadius = UDim.new(0, 20);
+        Color = Library.GlowColor;
         Offset = UDim2.new(0, 0, 0, 0);
         Spread = UDim2.new(0, 0, 0, 0);
         Transparency = 0;
@@ -167,8 +169,23 @@ function Library:ApplyUIShadow(Inst, Properties)
         end;
     end;
 
-    return Library:Create('UIShadow', ShadowProperties);
+    ShadowProperties.Color = Library.GlowColor;
+
+    local shadow = Library:Create('UIShadow', ShadowProperties);
+    table.insert(Library.GlowShadows, shadow);
+    return shadow;
 end;
+
+function Library:UpdateGlowColor(color)
+    Library.GlowColor = color
+    for _, shadow in ipairs(Library.GlowShadows) do
+        if shadow and shadow.Parent then
+            pcall(function()
+                shadow.Color = color
+            end)
+        end
+    end
+end
 
 function Library:CreateLabel(Properties, IsHud)
     local _Instance = Library:Create('TextLabel', {
